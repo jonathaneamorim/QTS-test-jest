@@ -1,0 +1,26 @@
+.register__block {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form__block__input {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.form input {
+    height: 35px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
