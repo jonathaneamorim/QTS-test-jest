@@ -14,10 +14,10 @@
 
 
 
-- install JEST npm install --save-dev jest
+- install JEST `npm install --save-dev jest`
 https://jestjs.io/pt-BR/docs/getting-started
 
-- install JSON-SERVER npm install json-server
+- install JSON-SERVER `npm install json-server`
 
 
 ## Links Uteis
