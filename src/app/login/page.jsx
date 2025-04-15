@@ -7,11 +7,13 @@ import { formatEmail, hasEmailRegistered, isValidEmail } from '@/utils/validatio
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getUsers } from '@/services/authService';
+import { checkPassword } from '@/utils/criptopass';
 
 export default function Login() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
 
     // Verifica se já está logado ao carregar o componente
     useEffect(() => {
@@ -41,11 +43,14 @@ export default function Login() {
             const listUsers = await getUsers();
             const user = listUsers.find(u => u.email === formatCredentials.email);
 
+            console.log('Senha inserida: ', formatCredentials.password);
+            console.log('Senha trazida do banco: ', user.password);
+
             if (!user) {
                 throw new Error('Email não cadastrado!');
             }
 
-            if (user.password !== formatCredentials.password) {
+            if (! await checkPassword(formatCredentials.password , user.password)) {
                 throw new Error('Senha incorreta!');
             }
 
@@ -66,6 +71,7 @@ export default function Login() {
     }
 
     return (
+
         <div className={styles.login__block}>
         <h1>Welcome to Social QA</h1>
         
