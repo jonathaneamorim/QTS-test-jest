@@ -1,4 +1,4 @@
-import { getUsers } from "./api";
+import { getUsers } from "@/services/authService.js";
 
 export function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -16,4 +16,8 @@ export const hasEmailRegistered = async(email) => {
     } else {
         return false;
     }
+}
+
+export const formatEmail = (email) => {
+    return (email.toLowerCase()).trim();
 }

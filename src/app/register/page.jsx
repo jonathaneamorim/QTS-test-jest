@@ -2,7 +2,8 @@
 
 // Importação de arquivos
 import styles from '@/app/register/register.module.css';
-import { hasEmailRegistered, isValidEmail } from '@/utils/validations';
+import { registerUser } from '@/services/authService';
+import { formatEmail, hasEmailRegistered, isStrongPassword, isValidEmail } from '@/utils/validations';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -11,42 +12,33 @@ export default function Register() {
     const router = useRouter();
     const URL_API = 'http://localhost:3001/';
 
+
     async function addNewUser(event) {
         
         event.preventDefault(); // Remove o evento de carregamento do evento acionado (Submit)
 
-            // Captura todos os dados do formulário a partir do evento
-            const formData = new FormData(event.target);
+        // Captura todos os dados do formulário a partir do evento
+        const formData = new FormData(event.target);
 
-            // Transforma FormData em objeto
-            const data = Object.fromEntries(formData.entries());
+        // Transforma FormData em objeto
+        const data = Object.fromEntries(formData.entries());
 
-            if(!isValidEmail(data.email)) {
-                alert('Insira um email válido!');
-                return false;
-            } else if(await hasEmailRegistered(data.email)) {
-                alert('O email inserido já existe no sistema!');
-                return false;
-            } else {
-                const response = await fetch(`${URL_API}user`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: data.name,
-                        email: (data.email.trim()).toLowerCase(),
-                    }),
-                });
-                if (!response.ok) {
-                    alert('Erro interno: ' + response.statusText);
-                    return;
-                } else {
-                    alert('Usuário registrado com sucesso!');
-                    router.push('/login');
-                    return;
-                }
-            }
+        const formatData = {
+            name: data.name,
+            email: formatEmail(data.email),
+            password: data.password
+        }
+
+        if(!isValidEmail(formatData.email)) throw new Error('Email inválido!');
+        if(!isStrongPassword(formatData.password)) throw new Error('Senha inválida!');
+        if(await hasEmailRegistered(formatData.email)) throw new Error('O email inserido já existe no sistema!');
+
+        const responseRegister = await registerUser(formatData);
+        
+        if(!responseRegister) throw new Error('Erro ao realizar cadastro!');
+
+        alert('Cadastro realizado com sucesso!');
+        router.push('/login');
     }
 
     return (

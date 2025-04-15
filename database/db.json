@@ -1,4 +1,17 @@
 {
-  "user": [],
+  "user": [
+    {
+      "id": "d6be",
+      "name": "a",
+      "email": "a@gmail.com",
+      "password": "aadada@ada234adfADd"
+    },
+    {
+      "id": "4001",
+      "name": "b",
+      "email": "b@gmail.com",
+      "password": "adasd@e1234#$@asd"
+    }
+  ],
   "post": []
 }
