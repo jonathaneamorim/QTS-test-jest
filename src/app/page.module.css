@@ -8,8 +8,10 @@
 
 .listlinks li {
   border: 1px solid white;
-  padding: 20px 30px 20px 30px;
   display: flex;
+}
+.listlinks li * {
+  padding: 20px 30px 20px 30px;
 }
 
 .listlinks__item {
