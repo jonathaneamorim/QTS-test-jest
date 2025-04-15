@@ -1,3 +1,5 @@
+import { hashPassword } from "@/utils/criptopass";
+
 const API_URL = 'http://localhost:3001/';
 
 export async function getUsers() {
@@ -17,10 +19,17 @@ export async function registerUser(credentials) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: JSON.stringify({
+                name: credentials.name,
+                email: credentials.email,
+                password : await hashPassword(credentials.password)
+            })
         });
+
         if(!response.ok) throw new Error();
+
         return 'Usuario registrado com sucesso!';
+
     } catch (error) {
         throw error;
     }
