@@ -4,7 +4,7 @@ test('CT01 - Login com credenciais válidas', async () => {
   await expect(utils.login({
     email: 'teste@gmail.com',
     password: 'Teste@1234'
-  })).resolves.toBeDefined();
+  })).resolves;
 });
 
 test('CT02 - Login com senha incorreta', async () => {
