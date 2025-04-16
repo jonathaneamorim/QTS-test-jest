@@ -3,11 +3,9 @@
 // Realiza as importações
 import { useState, useEffect } from 'react';
 import styles from '@/app/login/login.module.css';
-import { formatEmail, hasEmailRegistered, isValidEmail } from '@/utils/validations';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getUsers } from '@/services/authService';
-import { checkPassword } from '@/utils/criptopass';
+import { login } from '@/utils/manipulationsEvents';
 
 export default function Login() {
     const router = useRouter();
@@ -33,26 +31,7 @@ export default function Login() {
             const formData = new FormData(event.target);
             const credentials = Object.fromEntries(formData.entries());
 
-            const formatCredentials = {
-                email: formatEmail(credentials.email),
-                password: credentials.password
-            }
-
-            if (!isValidEmail(formatCredentials.email)) throw new Error('Insira um email válido!');
-            
-            const listUsers = await getUsers();
-            const user = listUsers.find(u => u.email === formatCredentials.email);
-
-            console.log('Senha inserida: ', formatCredentials.password);
-            console.log('Senha trazida do banco: ', user.password);
-
-            if (!user) {
-                throw new Error('Email não cadastrado!');
-            }
-
-            if (! await checkPassword(formatCredentials.password , user.password)) {
-                throw new Error('Senha incorreta!');
-            }
+            const user = await login(credentials);
 
             localStorage.setItem('userData', JSON.stringify({
                 name: user.name,

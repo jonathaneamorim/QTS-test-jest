@@ -1,66 +1,66 @@
 const utils = require('@/utils/manipulationsEvents');
 
 test('CT01 - Login com credenciais válidas', async () => {
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'teste@gmail.com',
     password: 'Teste@1234'
-  })).toContain('Bem-vindo de volta,');
+  })).resolves.not.toThrow();
 });
 
 test('CT02 - Login com senha incorreta', async () => {
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'teste@gmail.com',
     password: 'senhaErrada'
-  })).toBe('Senha incorreta!');
+  })).rejects.toThrow('Senha incorreta!');
 });
 
 test('CT03 - Login com e-mail não cadastrado', async () => {
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'emailerrado@gmail.com',
     password: 'Teste@1234'
-  })).toBe('Email não cadastrado!');
+  })).rejects.toThrow('Email não cadastrado!');
 });
 
 test('CT04 - Campos obrigatórios em branco', async () => {
-  expect(await utils.Login({
+  await expect(utils.login({
     email: '',
     password: ''
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'teste@gmail.com',
     password: ''
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: '',
     password: 'Teste@1234'
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: null,
     password: 'Teste@1234'
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'teste@gmail.com',
     password: null
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: null,
     password: null
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 
-  expect(await utils.Login({
+  await expect(utils.login({
     email: undefined,
     password: undefined
-  })).toBe('Email e Senha obrigatórios!');
+  })).rejects.toThrow('Email e Senha obrigatórios!');
 });
 
 test('CT05 - Formato inválido de e-mail', async () => {
-  expect(await utils.Login({
+  await expect(utils.login({
     email: 'formatoInvalido',
     password: 'Teste@1234'
-  })).toBe('Insira um email válido!');
+  })).rejects.toThrow('Insira um email válido!');
 });
