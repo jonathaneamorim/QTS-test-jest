@@ -47,6 +47,18 @@
       "name": "Teste",
       "email": "teste@gmail.com",
       "password": "$2b$10$RdDy5cDihIzuBT3d5Q6oBe54zsR37r7BMgsnR.Wnkprd2/Rb14KIq"
+    },
+    {
+      "id": "1ad4",
+      "name": "Jonas",
+      "email": "jonathan@gmail.com",
+      "password": "$2b$10$ERd4dAhbRpLCwhSorleDDOYuN.8IoX/fgEAuAxa6f95LXa3Pn4uW6"
+    },
+    {
+      "id": "c576",
+      "name": "jonas",
+      "email": "jonas@g.c",
+      "password": "$2b$10$3tHjc3F.OvVlD9hxxwoVRe0iOwp9OoJLvTwp2xa8oU1otCB7JKObi"
     }
   ],
   "post": []

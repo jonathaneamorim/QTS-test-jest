@@ -1,11 +1,15 @@
-import bcrypt from 'bcryptjs'; // Instead of 'bcrypt'
+import bcrypt from 'bcryptjs';
 
 const saltRounds = 10;
 
 export async function hashPassword(password) {
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hash = await bcrypt.hash(password, salt);
-  return hash;
+  try {
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(password, salt);
+    return hash;
+  } catch(err) {
+    throw new Error('Falha ao criptografar');
+  }
 }
 
 export async function checkPassword(inputPassword, storedHash) {

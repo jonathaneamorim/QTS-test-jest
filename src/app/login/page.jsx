@@ -56,13 +56,12 @@ export default function Login() {
         
         {error && <div className={styles.error}>{error}</div>}
         
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} onFocus={() => setError(null)}>
             <div className={styles.form__block__input}>
                 <input 
                     type="email" 
                     name="email" 
-                    id="emailLogin" 
-                    required 
+                    id="emailLogin"  
                 />
                 <label htmlFor="email">Email</label>
             </div>
@@ -72,7 +71,6 @@ export default function Login() {
                     type="password" 
                     name="password" 
                     id="submitLogin" 
-                    required 
                 />
                 <label htmlFor="password">Senha</label>
             </div>

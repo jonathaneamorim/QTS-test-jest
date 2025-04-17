@@ -18,6 +18,10 @@ export const hasEmailRegistered = async(email) => {
     }
 }
 
+export const formatName = (name) => {
+    return name.trim();
+}
+
 export const formatEmail = (email) => {
     return (email.toLowerCase()).trim();
 }

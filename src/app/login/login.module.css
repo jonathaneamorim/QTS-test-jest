@@ -24,3 +24,11 @@
     border-radius: 10px;
     border: 1px solid gray;
 }
+
+.error {
+    display: flex;
+    color: red;
+    font-size: 1.2rem;
+    max-width: 320px;
+    text-align: justify;
+}

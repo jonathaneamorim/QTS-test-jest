@@ -3,7 +3,7 @@
 // Importação de arquivos
 import styles from '@/app/register/register.module.css';
 import { registerUser } from '@/services/authService';
-import { formatEmail, hasEmailRegistered, isStrongPassword, isValidEmail } from '@/utils/validations';
+import { formatEmail, formatName, hasEmailRegistered, isStrongPassword, isValidEmail } from '@/utils/validations';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,14 +25,14 @@ export default function Register() {
             const data = Object.fromEntries(formData.entries());
 
             const formatData = {
-                name: data.name,
+                name: formatName(data.name),
                 email: formatEmail(data.email),
                 password: data.password
             }
-
+            if(formatData.name === '') throw new Error('Erro: Digite um nome!');
             if(!isValidEmail(formatData.email)) throw new Error('Erro: digite um email válido');
-            if(!isStrongPassword(formatData.password)) throw new Error('A senha deve conter pelo menos 8 caracteres, com letra, número e caractere especial');
-            if(await hasEmailRegistered(formatData.email)) throw new Error('O email inserido já está cadastrado no sistema!');
+            if(!isStrongPassword(formatData.password)) throw new Error('Erro: A senha deve conter pelo menos 8 caracteres, com letra, número e caractere especial');
+            if(await hasEmailRegistered(formatData.email)) throw new Error('Erro: O email inserido já está cadastrado no sistema!');
 
             const responseRegister = await registerUser(formatData);
             
@@ -54,19 +54,19 @@ export default function Register() {
 
             {error && <div className={styles.error}>{error}</div>}
 
-            <form className={styles.form} onSubmit={addNewUser}>
+            <form className={styles.form} onSubmit={addNewUser} onFocus={() => setError(null)}>
                 <div className={styles.form__block__input}>
-                    <input name="name" type="text" id="registerName" required />
+                    <input name="name" type="text" id="registerName" />
                     <label htmlFor="name">Nome</label>  
                 </div>
 
                 <div className={styles.form__block__input}>
-                    <input type="email" name="email" id="registerEmail" required />
+                    <input type="email" name="email" id="registerEmail" />
                     <label htmlFor="email">Email</label>
                 </div>
 
                 <div className={styles.form__block__input}>
-                    <input type="password" name="password" id="registerPassword" required />
+                    <input type="password" name="password" id="registerPassword" />
                     <label htmlFor="password">Senha</label>
                 </div>
 

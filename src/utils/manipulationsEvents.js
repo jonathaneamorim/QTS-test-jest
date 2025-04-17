@@ -11,19 +11,14 @@ export async function login(formData) {
         email: formatEmail(credentials.email),
         password: credentials.password
     }
-
-    if (!isValidEmail(formatCredentials.email)) throw new Error('Insira um email válido!');
     
+    if (!isValidEmail(formatCredentials.email)) throw new Error('Insira um email válido!');
+
     const listUsers = await getUsers();
     const user = listUsers.find(u => u.email === formatCredentials.email);
-    
-    if (!user) {
-        throw new Error('Email não cadastrado!');
-    }
 
-    if (! await checkPassword(formatCredentials.password , user.password)) {
-        throw new Error('Senha incorreta!');
-    }
+    if (!user) throw new Error('Email não cadastrado!');
+    if (! await checkPassword(formatCredentials.password , user.password)) throw new Error('Senha incorreta!');
     
     return user;
 }

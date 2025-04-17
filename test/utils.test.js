@@ -1,5 +1,6 @@
 const utils = require('@/utils/manipulationsEvents');
 
+// Login com credenciais válidas
 test('CT01 - Login com credenciais válidas', async () => {
   await expect(utils.login({
     email: 'teste@gmail.com',

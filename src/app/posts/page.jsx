@@ -2,18 +2,23 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Modal from '@/components/modalNewPost/modal';
 
 export default function Posts() {
     const router = useRouter();
-    const URL = 'http://localhost:3000/';
+    const URL = 'http://localhost:3001/';
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [data, setData] = useState(null); 
     const [loading, setLoading] = useState(true);
 
     async function getPosts() {
-        const response = await fetch(`${URL}post`);
-        if(!response.ok) throw new Error('Failed to fetch posts.');
-        return await response.json();
+        try {
+            const response = await fetch(`${URL}post`);
+            if(!response.ok) throw new Error('Failed to fetch posts.');
+            return await response.json();
+        } catch (err) {
+
+        }
     }
 
     useEffect(() => {
@@ -32,7 +37,6 @@ export default function Posts() {
                 }
             }
         };
-
         checkAuthAndFetchData();
     }, [router]);
 
@@ -46,7 +50,7 @@ export default function Posts() {
         <div>
             <header>
                 <h2>Social QA - Postagens</h2>
-                <p>{ userData?.email }</p>
+                <p>{ userData?.name }</p>
 
                 <div> 
                 <button
